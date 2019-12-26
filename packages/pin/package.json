@@ -1,8 +1,8 @@
 {
   "name": "pin",
-  "description": "manage aliases like a pro",
-  "version": "0.0.0",
-  "author": "#forgng",
+  "description": "Pin folder and files",
+  "version": "0.0.1",
+  "author": "@forgng",
   "bin": {
     "pin": "./bin/run"
   },

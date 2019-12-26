@@ -19,7 +19,7 @@ $ npm install -g pin
 $ pin COMMAND
 running command...
 $ pin (-v|--version|version)
-pin/0.0.0 darwin-x64 node-v10.16.0
+pin/0.0.1 darwin-x64 node-v10.16.0
 $ pin --help [COMMAND]
 USAGE
   $ pin COMMAND
@@ -28,8 +28,25 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`pin add [FILE]`](#pin-add-file)
 * [`pin hello [FILE]`](#pin-hello-file)
 * [`pin help [COMMAND]`](#pin-help-command)
+
+## `pin add [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ pin add [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/add.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/add.ts)_
 
 ## `pin hello [FILE]`
 
@@ -49,7 +66,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/forgng/pin/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/hello.ts)_
 
 ## `pin help [COMMAND]`
 
