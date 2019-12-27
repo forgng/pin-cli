@@ -29,12 +29,14 @@ USAGE
 # Commands
 <!-- commands -->
 * [`pin add [FILE]`](#pin-add-file)
+* [`pin clear [FILE]`](#pin-clear-file)
 * [`pin hello [FILE]`](#pin-hello-file)
 * [`pin help [COMMAND]`](#pin-help-command)
+* [`pin list`](#pin-list)
 
 ## `pin add [FILE]`
 
-describe the command here
+Add a new pin
 
 ```
 USAGE
@@ -47,6 +49,22 @@ OPTIONS
 ```
 
 _See code: [src/commands/add.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/add.ts)_
+
+## `pin clear [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ pin clear [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/clear.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clear.ts)_
 
 ## `pin hello [FILE]`
 
@@ -84,4 +102,18 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
+
+## `pin list`
+
+describe the command here
+
+```
+USAGE
+  $ pin list
+
+EXAMPLE
+  $ pin list
+```
+
+_See code: [src/commands/list.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/list.ts)_
 <!-- commandsstop -->

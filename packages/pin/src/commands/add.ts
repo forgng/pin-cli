@@ -1,40 +1,62 @@
 import { Command, flags } from '@oclif/command';
 import { PINS_FILE_PATH } from '../config';
-const fs = require('fs');
-const path = './file.txt';
+import { createPinsFile, checkPinsFileExists, readPinsFile } from '../utils';
+const { prompt } = require('enquirer');
 
-function _createPinsFile() {
-  console.log('PINS_FILE_PATH', PINS_FILE_PATH);
-  fs.closeSync(fs.openSync(PINS_FILE_PATH, 'w'));
+interface InputArgs {
+  args: {
+    pin: string;
+  };
+  flags: any;
 }
 export default class Add extends Command {
   static description = 'Add a new pin';
 
-  static flags = {
-    help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: 'n', description: 'name to print' }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: 'f' }),
-  };
+  // static flags = {
+  //   help: flags.help({ char: 'h' }),
+  //   // flag with a value (-n, --name=VALUE)
+  //   name: flags.string({ char: 'n', description: 'name to print' }),
+  //   // flag with no value (-f, --force)
+  //   force: flags.boolean({ char: 'f' }),
+  // };
 
-  static args = [{ name: 'file' }];
+  static args = [
+    { name: 'pin', required: false, description: 'Name for the pin' },
+  ];
 
   async run() {
-    const { args, flags } = this.parse(Add);
+    const { args, flags }: InputArgs = this.parse(Add);
     console.log('args', args);
     console.log('flags', flags);
-    if (fs.existsSync(PINS_FILE_PATH)) {
-      console.log('FILE Exists');
-    } else {
+
+    if (!checkPinsFileExists()) {
       console.log('FILE NOT EXISTS');
-      _createPinsFile();
+      try {
+        createPinsFile();
+      } catch (err) {
+        console.log(err);
+      }
     }
-    const name = flags.name || 'world';
-    console.log('name', name);
-    this.log(`add new pin`);
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`);
+    try {
+      const r = readPinsFile();
+      console.log(r);
+    } catch (err) {
+      console.log(err);
+    }
+
+    if (args.pin) {
+      console.log('args.pin', args.pin);
+    } else {
+      try {
+        const { name }: { name: string } = await prompt({
+          type: 'input',
+          name: 'name',
+          message: 'Give this pin a memorable name',
+        });
+        console.log(name);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 }
