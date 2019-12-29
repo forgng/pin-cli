@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { readPinsFile } from '../utils';
+import { readFile } from '../utils';
 
 export default class Hello extends Command {
   static description = 'describe the command here';
@@ -8,7 +8,7 @@ export default class Hello extends Command {
 
   async run() {
     const { args, flags } = this.parse(Hello);
-    const res = readPinsFile();
+    const res = readFile();
     console.log('res', res);
   }
 }

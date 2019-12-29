@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { removePinsFile } from '../utils';
+import { clear } from '../utils';
 
 export default class Clear extends Command {
   static description = 'describe the command here';
@@ -15,6 +15,10 @@ export default class Clear extends Command {
   static args = [{ name: 'file' }];
 
   async run() {
-    removePinsFile();
+    try {
+      clear();
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

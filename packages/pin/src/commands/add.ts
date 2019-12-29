@@ -1,6 +1,11 @@
 import { Command, flags } from '@oclif/command';
-import { PINS_FILE_PATH } from '../config';
-import { createPinsFile, checkPinsFileExists, readPinsFile } from '../utils';
+import {
+  createPinsFile,
+  checkIfFileExists,
+  readFile,
+  PINS_FILE,
+  BASH_FILE,
+} from '../utils';
 const { prompt } = require('enquirer');
 
 interface InputArgs {
@@ -29,7 +34,7 @@ export default class Add extends Command {
     console.log('args', args);
     console.log('flags', flags);
 
-    if (!checkPinsFileExists()) {
+    if (!checkIfFileExists(PINS_FILE)) {
       console.log('FILE NOT EXISTS');
       try {
         createPinsFile();
@@ -37,26 +42,26 @@ export default class Add extends Command {
         console.log(err);
       }
     }
-    try {
-      const r = readPinsFile();
-      console.log(r);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const r = readFile();
+    //   console.log(r);
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
-    if (args.pin) {
-      console.log('args.pin', args.pin);
-    } else {
-      try {
-        const { name }: { name: string } = await prompt({
-          type: 'input',
-          name: 'name',
-          message: 'Give this pin a memorable name',
-        });
-        console.log(name);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // if (args.pin) {
+    //   console.log('args.pin', args.pin);
+    // } else {
+    //   try {
+    //     const { name }: { name: string } = await prompt({
+    //       type: 'input',
+    //       name: 'name',
+    //       message: 'Give this pin a memorable name',
+    //     });
+    //     console.log(name);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   }
 }
