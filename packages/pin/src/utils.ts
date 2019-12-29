@@ -66,8 +66,30 @@ export function clear() {
 
 export function readFile(fileName: string): string {
   const data = fs.readFileSync(fileName, 'utf8');
-  console.log(data.toString());
   return data.toString();
+}
+
+interface Pin {
+  name: string;
+  path: string;
+}
+export function getPinList(): Pin[] {
+  let pinsFileContent = readFile(PINS_FILE);
+  console.log(pinsFileContent);
+  const pinsList = pinsFileContent
+    .replace(/\alias /g, '')
+    .replace(/"/g, '')
+    .split('\n')
+    .filter(line => line)
+    .map(line => {
+      const lineSplitted = line.split('=');
+      return {
+        name: lineSplitted[0],
+        path: lineSplitted[1],
+      };
+    });
+  console.log(pinsList);
+  return pinsList;
 }
 
 export const checkIfFileExists = (path: string): boolean => fs.existsSync(path);

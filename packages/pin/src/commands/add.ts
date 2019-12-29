@@ -5,6 +5,7 @@ import {
   readFile,
   PINS_FILE,
   BASH_FILE,
+  getPinList,
 } from '../utils';
 const { prompt } = require('enquirer');
 
@@ -14,6 +15,7 @@ interface InputArgs {
   };
   flags: any;
 }
+
 export default class Add extends Command {
   static description = 'Add a new pin';
 
@@ -42,26 +44,25 @@ export default class Add extends Command {
         console.log(err);
       }
     }
-    // try {
-    //   const r = readFile();
-    //   console.log(r);
-    // } catch (err) {
-    //   console.log(err);
-    // }
 
-    // if (args.pin) {
-    //   console.log('args.pin', args.pin);
-    // } else {
-    //   try {
-    //     const { name }: { name: string } = await prompt({
-    //       type: 'input',
-    //       name: 'name',
-    //       message: 'Give this pin a memorable name',
-    //     });
-    //     console.log(name);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
+    if (args.pin) {
+      console.log('args.pin', args.pin);
+    } else {
+      try {
+        const { name }: { name: string } = await prompt({
+          type: 'input',
+          name: 'name',
+          message: 'Give this pin a memorable name',
+        });
+        console.log(name);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
+}
+
+function addPin(pin: string) {
+  const pinList = getPinList();
+  console.log(pinList);
 }
