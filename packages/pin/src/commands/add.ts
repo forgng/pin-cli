@@ -6,6 +6,8 @@ import {
   PINS_FILE,
   BASH_FILE,
   getPinList,
+  pinAlreadyExists,
+  addPin,
 } from '../utils';
 const { prompt } = require('enquirer');
 
@@ -55,14 +57,16 @@ export default class Add extends Command {
           message: 'Give this pin a memorable name',
         });
         console.log(name);
+        if (name) {
+          try {
+            addPin(name);
+          } catch (error) {
+            console.log(error);
+          }
+        }
       } catch (err) {
         console.log(err);
       }
     }
   }
-}
-
-function addPin(pin: string) {
-  const pinList = getPinList();
-  console.log(pinList);
 }

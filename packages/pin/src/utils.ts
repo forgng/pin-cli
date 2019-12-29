@@ -34,6 +34,27 @@ export function createPinsFile() {
   }
 }
 
+export function pinAlreadyExists(pin: string): boolean {
+  const pinsContent = readFile(PINS_FILE);
+  return pinsContent.includes(`alias ${pin}="`);
+}
+
+export function addPin(name: string) {
+  if (pinAlreadyExists(name)) {
+    throw new Error('Pin already exists');
+  }
+  try {
+    fs.copyFileSync(PINS_FILE, PINS_FILE_TMP);
+    fs.appendFileSync(PINS_FILE, `alias ${name}="cd ${process.cwd()}"`);
+  } catch (error) {
+    throw new Error('Something went wrong');
+  } finally {
+    if (checkIfFileExists(PINS_FILE_TMP)) {
+      fs.unlinkSync(PINS_FILE_TMP);
+    }
+  }
+}
+
 export function clear() {
   try {
     if (checkIfFileExists(PINS_FILE)) {
