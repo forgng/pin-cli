@@ -29,10 +29,12 @@ USAGE
 # Commands
 <!-- commands -->
 * [`pin add [PIN]`](#pin-add-pin)
+* [`pin clean [FILE]`](#pin-clean-file)
 * [`pin clear [FILE]`](#pin-clear-file)
-* [`pin delete [FILE]`](#pin-delete-file)
+* [`pin delete`](#pin-delete)
 * [`pin help [COMMAND]`](#pin-help-command)
 * [`pin list [FILE]`](#pin-list-file)
+* [`pin nuke [FILE]`](#pin-nuke-file)
 * [`pin search`](#pin-search)
 
 ## `pin add [PIN]`
@@ -54,6 +56,22 @@ OPTIONS
 
 _See code: [src/commands/add.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/add.ts)_
 
+## `pin clean [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ pin clean [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/clean.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clean.ts)_
+
 ## `pin clear [FILE]`
 
 describe the command here
@@ -70,18 +88,17 @@ OPTIONS
 
 _See code: [src/commands/clear.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clear.ts)_
 
-## `pin delete [FILE]`
+## `pin delete`
 
 describe the command here
 
 ```
 USAGE
-  $ pin delete [FILE]
+  $ pin delete
 
 OPTIONS
   -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help   show CLI help
 ```
 
 _See code: [src/commands/delete.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/delete.ts)_
@@ -116,6 +133,22 @@ OPTIONS
 ```
 
 _See code: [src/commands/list.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/list.ts)_
+
+## `pin nuke [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ pin nuke [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/nuke.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/nuke.ts)_
 
 ## `pin search`
 

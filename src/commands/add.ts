@@ -8,6 +8,7 @@ import {
   writeToFile,
   PINS_ALIASES,
   now,
+  updatePinList,
 } from '../utils';
 import { PinFile, Pin } from './types';
 const { prompt } = require('enquirer');
@@ -84,18 +85,18 @@ export default class Add extends Command {
           newPins = [...pinsFile.pins, { name: pinName, path: process.cwd() }];
         }
       }
-      const newPinsFile: PinFile = {
-        ...pinsFile,
-        updatedAt: now(),
-        pins: newPins,
-      };
-      console.log(newPinsFile);
-      const pinsAliases = newPins
-        .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
-        .join('');
-      console.log('pinsAliases', pinsAliases);
-      writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
-      writeToFile(PINS_ALIASES, pinsAliases);
+      updatePinList(newPins);
+      // const newPinsFile: PinFile = {
+      //   ...pinsFile,
+      //   updatedAt: now(),
+      //   pins: newPins,
+      // };
+      // const pinsAliases = newPins
+      //   .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
+      //   .join('');
+      // console.log('pinsAliases', pinsAliases);
+      // writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
+      // writeToFile(PINS_ALIASES, pinsAliases);
       this.log(chalk.green('New pin added'));
       this.log(`${pinName} ${chalk.red('=>')} ${process.cwd()}`);
     } catch (err) {

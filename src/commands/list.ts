@@ -13,11 +13,10 @@ export default class List extends Command {
 
   async run() {
     const pinsFile = getPinList();
-    console.log(pinsFile);
     pinsFile
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(pin => {
-        console.log(`${chalk.blue(pin.name)} => ${chalk.red(pin.path)}`);
+        this.log(`${chalk.blue(pin.name)} => ${chalk.red(pin.path)}`);
       });
   }
 }

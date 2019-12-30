@@ -5,7 +5,7 @@ const execa = require('execa');
 
 import * as path from 'path';
 import * as os from 'os';
-import { PinFile } from './commands/types';
+import { PinFile, Pin } from './commands/types';
 // # Setting PATH for Python 3.7
 // # The original version is saved in .bash_profile.pysave
 // PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
@@ -62,7 +62,7 @@ function createPinAliasesFile() {
 }
 
 export function createPinsFile() {
-  if (checkIfFileExists(PINS_ALIASES) && checkIfFileExists(PINS_FILE)) {
+  if (checkIfPathExists(PINS_ALIASES) && checkIfPathExists(PINS_FILE)) {
     return;
   }
   try {
@@ -80,81 +80,12 @@ export function pinAlreadyExists(pin: string): boolean {
   return pinsContent.includes(`alias ${pin}="`);
 }
 
-// interface AddPin {
-//   name: string;
-//   force?: boolean;
-// }
-
-// export async function addPin({ name, force = false }: AddPin) {
-//   try {
-//     createPinsFile();
-//     // fs.copyFileSync(PINS_ALIASES, PINS_FILE_TMP);
-//     let pinsFile = readJson<PinFile>(PINS_FILE);
-//     console.log('pinsFile', pinsFile);
-//     let newPins;
-//     if (force) {
-//       newPins = [
-//         ...pinsFile.pins.filter(pin => pin.name !== name),
-//         { name, path: process.cwd() },
-//       ];
-//     } else {
-//       if (pinsFile.pins.find(pin => pin.name === name)) {
-//         this.log(chalk.blue('A pin with this name already exists'));
-//         const { overwrite } = await prompt({
-//           type: 'confirm',
-//           name: 'overwrite',
-//           message: 'Overwrite?',
-//         });
-//         console.log('answer', overwrite);
-//         if (overwrite === true) {
-//           addPin({ name, force: true });
-//           return;
-//         } else {
-//           console.log('NOT OVERWRITE');
-//           let newName;
-//           try {
-//             newName = await askForPinName('Choose another name');
-//           } catch (error) {}
-//           if (!newName) {
-//             return;
-//           }
-//           addPin({ name: newName });
-//           return;
-//         }
-//       } else {
-//         newPins = [...pinsFile.pins, { name, path: process.cwd() }];
-//       }
-//     }
-//     console.log(newPins);
-
-//     const newPinsFile: PinFile = {
-//       ...pinsFile,
-//       updatedAt: now(),
-//       pins: newPins,
-//     };
-//     console.log(newPinsFile);
-//     const pinsAliases = newPins
-//       .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
-//       .join('');
-//     console.log('pinsAliases', pinsAliases);
-//     fs.writeFileSync(PINS_FILE, JSON.stringify(newPinsFile));
-//     fs.writeFileSync(PINS_ALIASES, pinsAliases);
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error('Something went wrong');
-//   } finally {
-//     // if (checkIfFileExists(PINS_ALIASES)) {
-//     //   fs.unlinkSync(PINS_ALIASES);
-//     // }
-//   }
-// }
-
 export function clear() {
   try {
-    if (checkIfFileExists(PINS_ALIASES)) {
+    if (checkIfPathExists(PINS_ALIASES)) {
       fs.unlinkSync(PINS_ALIASES);
     }
-    if (checkIfFileExists(BASH_FILE_BACKUP)) {
+    if (checkIfPathExists(BASH_FILE_BACKUP)) {
       fs.unlinkSync(BASH_FILE_BACKUP);
     }
     copyFile(BASH_FILE, BASH_FILE_TMP);
@@ -164,13 +95,13 @@ export function clear() {
     console.log('bashContent', bashContent);
     fs.writeFileSync(BASH_FILE, bashContent);
 
-    if (checkIfFileExists(PINS_FILE_TMP)) {
+    if (checkIfPathExists(PINS_FILE_TMP)) {
       fs.unlinkSync(PINS_FILE_TMP);
     }
-    if (checkIfFileExists(BASH_FILE_BACKUP_TMP)) {
+    if (checkIfPathExists(BASH_FILE_BACKUP_TMP)) {
       fs.unlinkSync(BASH_FILE_BACKUP_TMP);
     }
-    if (checkIfFileExists(BASH_FILE_TMP)) {
+    if (checkIfPathExists(BASH_FILE_TMP)) {
       fs.unlinkSync(BASH_FILE_TMP);
     }
   } catch (err) {
@@ -193,6 +124,19 @@ export function getPinList(): Pin[] {
   return pinsFileContent.pins;
 }
 
+export function updatePinList(newPinList: Pin[]) {
+  let pinsFile = readJson<PinFile>(PINS_FILE);
+  const newPinsFile: PinFile = {
+    ...pinsFile,
+    updatedAt: now(),
+    pins: newPinList,
+  };
+  const pinsAliases = newPinList
+    .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
+    .join('');
+  writeToFile(PINS_FILE, JSON.stringify(pinsFile));
+  writeToFile(PINS_ALIASES, pinsAliases);
+}
 export function isCurrentPathUsedByAPin(): boolean {
   let pinsFileContent = readJson<PinFile>(PINS_FILE);
   const pins = pinsFileContent.pins;
@@ -209,7 +153,7 @@ export function getPinsThatUsesCurrentPath(): Pin[] {
   return pinsFileContent.pins.filter(pin => pin.path === currentPath);
 }
 
-export const checkIfFileExists = (path: string): boolean => fs.existsSync(path);
+export const checkIfPathExists = (path: string): boolean => fs.existsSync(path);
 export const copyFile = (from: string, to: string) => fs.copyFileSync(from, to);
 
 // export LC_ALL=en_US.UTF-8
