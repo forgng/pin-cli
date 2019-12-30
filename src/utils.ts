@@ -22,7 +22,7 @@ export const PINS_ALIASES_TMP = `${tmpDir}.pins.tmp`;
 export const PINS_FILE_TMP = `${tmpDir}.pins.json.tmp`;
 export const BASH_FILE_BACKUP_TMP = `${tmpDir}.bashrc.saved_by_pin.tpm`;
 
-export async function askForPinName(message?: string) {
+export async function askForPinName(message?: string): Promise<string> {
   const { name }: { name: string } = await prompt({
     type: 'input',
     name: 'name',
