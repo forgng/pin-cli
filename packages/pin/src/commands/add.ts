@@ -1,9 +1,11 @@
+const chalk = require('chalk');
+
 import { Command, flags } from '@oclif/command';
 import {
   createPinsFile,
   checkIfFileExists,
   readFile,
-  PINS_FILE,
+  PINS_ALIASES,
   BASH_FILE,
   getPinList,
   pinAlreadyExists,
@@ -35,38 +37,25 @@ export default class Add extends Command {
 
   async run() {
     const { args, flags }: InputArgs = this.parse(Add);
-    console.log('args', args);
-    console.log('flags', flags);
-
-    if (!checkIfFileExists(PINS_FILE)) {
-      console.log('FILE NOT EXISTS');
-      try {
-        createPinsFile();
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
+    createPinsFile();
+    let pinName;
     if (args.pin) {
-      console.log('args.pin', args.pin);
+      pinName = args.pin;
     } else {
-      try {
-        const { name }: { name: string } = await prompt({
-          type: 'input',
-          name: 'name',
-          message: 'Give this pin a memorable name',
-        });
-        console.log(name);
-        if (name) {
-          try {
-            addPin(name);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      pinName = await askForPinName();
     }
+    if (!pinName) {
+      return;
+    }
+    addPin({ name });
   }
+}
+
+async function askForPinName() {
+  const { name }: { name: string } = await prompt({
+    type: 'input',
+    name: 'name',
+    message: 'Give this pin a memorable name',
+  });
+  return name;
 }

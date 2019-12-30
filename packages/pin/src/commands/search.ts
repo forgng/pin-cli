@@ -3,13 +3,13 @@ import { getPinList } from '../utils';
 const { prompt } = require('enquirer');
 const chalk = require('chalk');
 
-export default class Hello extends Command {
+export default class Search extends Command {
   static description = 'describe the command here';
 
-  static examples = [`$ pin list`];
+  static examples = [`$ pin search`];
 
   async run() {
-    const { args, flags } = this.parse(Hello);
+    const { args, flags } = this.parse(Search);
     const pinList = getPinList();
     console.log('pinList', pinList);
     if (!pinList.length) {
