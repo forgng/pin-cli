@@ -28,19 +28,22 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`pin add [FILE]`](#pin-add-file)
+* [`pin add [PIN]`](#pin-add-pin)
 * [`pin clear [FILE]`](#pin-clear-file)
-* [`pin hello [FILE]`](#pin-hello-file)
 * [`pin help [COMMAND]`](#pin-help-command)
-* [`pin list`](#pin-list)
+* [`pin list [FILE]`](#pin-list-file)
+* [`pin search`](#pin-search)
 
-## `pin add [FILE]`
+## `pin add [PIN]`
 
 Add a new pin
 
 ```
 USAGE
-  $ pin add [FILE]
+  $ pin add [PIN]
+
+ARGUMENTS
+  PIN  Name for the pin
 
 OPTIONS
   -f, --force
@@ -66,26 +69,6 @@ OPTIONS
 
 _See code: [src/commands/clear.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clear.ts)_
 
-## `pin hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ pin hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ pin hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/hello.ts)_
-
 ## `pin help [COMMAND]`
 
 display help for pin
@@ -103,17 +86,33 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `pin list`
+## `pin list [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ pin list
+  $ pin list [FILE]
 
-EXAMPLE
-  $ pin list
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
 ```
 
 _See code: [src/commands/list.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/list.ts)_
+
+## `pin search`
+
+describe the command here
+
+```
+USAGE
+  $ pin search
+
+EXAMPLE
+  $ pin search
+```
+
+_See code: [src/commands/search.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/search.ts)_
 <!-- commandsstop -->

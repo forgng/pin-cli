@@ -1,6 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 import { prompt } from 'enquirer';
+const execa = require('execa');
 
 import * as path from 'path';
 import * as os from 'os';
@@ -31,6 +32,15 @@ interface PinFile {
   pins: Pin[];
 }
 
+export async function askForPinName(message?: string) {
+  const { name }: { name: string } = await prompt({
+    type: 'input',
+    name: 'name',
+    message: message || 'Give this pin a memorable name',
+  });
+  return name;
+}
+
 function now(): number {
   return new Date().getTime();
 }
@@ -57,6 +67,7 @@ function creteBashFileBackup() {
 function createPinAliasesFile() {
   fs.writeFileSync(PINS_ALIASES);
 }
+
 export function createPinsFile() {
   if (checkIfFileExists(PINS_ALIASES) && checkIfFileExists(PINS_FILE)) {
     console.log('both PINS_ALIASES and PINS_FILE exists');
@@ -84,50 +95,60 @@ interface AddPin {
 
 export async function addPin({ name, force = false }: AddPin) {
   try {
+    createPinsFile();
     // fs.copyFileSync(PINS_ALIASES, PINS_FILE_TMP);
     let pinsFile = readJson<PinFile>(PINS_FILE);
     console.log('pinsFile', pinsFile);
+    let newPins;
+    if (force) {
+      newPins = [
+        ...pinsFile.pins.filter(pin => pin.name !== name),
+        { name, path: process.cwd() },
+      ];
+    } else {
+      if (pinsFile.pins.find(pin => pin.name === name)) {
+        console.log(chalk.blue('A pin with this name already exists'));
+        const { overwrite } = await prompt({
+          type: 'confirm',
+          name: 'overwrite',
+          message: 'Overwrite?',
+        });
+        console.log('answer', overwrite);
+        if (overwrite === true) {
+          addPin({ name, force: true });
+          return;
+        } else {
+          console.log('NOT OVERWRITE');
+          let newName;
+          try {
+            newName = await askForPinName('Choose another name');
+          } catch (error) {}
+          if (!newName) {
+            return;
+          }
+          addPin({ name: newName });
+          return;
+        }
+      } else {
+        newPins = [...pinsFile.pins, { name, path: process.cwd() }];
+      }
+    }
+    console.log(newPins);
 
-    // if (!pinsFile) {
-    //   return;
-    // }
-    // let newPins;
-    // if (force) {
-    //   newPins = [
-    //     ...pinsFile.pins.filter(pin => pin.name !== name),
-    //     { name, path: process.cwd() },
-    //   ];
-    // } else {
-    //   if (pinsFile.pins.find(pin => pin.name === name)) {
-    //     console.log('A pin with this name already exists');
-    //     const answer = await prompt({
-    //       type: 'confirm',
-    //       name: 'question',
-    //       message: 'Overwrite?',
-    //     });
-    //     console.log('answer', answer);
-    //     if (answer === true) {
-    //       addPin(name, true);
-    //     } else {
-    //       console.log('NOT OVERWRITE');
-    //       return;
-    //     }
-    //   } else {
-    //     newPins = [...pinsFile.pins, { name, path: process.cwd() }];
-    //   }
-    // }
-
-    // const newPinsFile: PinFile = {
-    //   ...pinsFile,
-    //   updatedAt: now(),
-    //   pins: newPins,
-    // };
-    // fs.writeFileSync(PINS_FILE, JSON.stringify(newPinsFile));
-    // const pinsAliases = newPins
-    //   .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
-    //   .join('');
-    // fs.writeFileSync(PINS_ALIASES, pinsAliases);
+    const newPinsFile: PinFile = {
+      ...pinsFile,
+      updatedAt: now(),
+      pins: newPins,
+    };
+    console.log(newPinsFile);
+    const pinsAliases = newPins
+      .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
+      .join('');
+    console.log('pinsAliases', pinsAliases);
+    fs.writeFileSync(PINS_FILE, JSON.stringify(newPinsFile));
+    fs.writeFileSync(PINS_ALIASES, pinsAliases);
   } catch (error) {
+    console.log(error);
     throw new Error('Something went wrong');
   } finally {
     // if (checkIfFileExists(PINS_ALIASES)) {

@@ -1,35 +1,28 @@
 const chalk = require('chalk');
 
 import { Command, flags } from '@oclif/command';
-import {
-  createPinsFile,
-  checkIfFileExists,
-  readFile,
-  PINS_ALIASES,
-  BASH_FILE,
-  getPinList,
-  pinAlreadyExists,
-  addPin,
-} from '../utils';
+import { addPin, askForPinName } from '../utils';
 const { prompt } = require('enquirer');
 
 interface InputArgs {
   args: {
     pin: string;
   };
-  flags: any;
+  flags: {
+    force: boolean;
+  };
 }
 
 export default class Add extends Command {
   static description = 'Add a new pin';
 
-  // static flags = {
-  //   help: flags.help({ char: 'h' }),
-  //   // flag with a value (-n, --name=VALUE)
-  //   name: flags.string({ char: 'n', description: 'name to print' }),
-  //   // flag with no value (-f, --force)
-  //   force: flags.boolean({ char: 'f' }),
-  // };
+  static flags = {
+    help: flags.help({ char: 'h' }),
+    // flag with a value (-n, --name=VALUE)
+    name: flags.string({ char: 'n', description: 'name to print' }),
+    // flag with no value (-f, --force)
+    force: flags.boolean({ char: 'f' }),
+  };
 
   static args = [
     { name: 'pin', required: false, description: 'Name for the pin' },
@@ -37,7 +30,9 @@ export default class Add extends Command {
 
   async run() {
     const { args, flags }: InputArgs = this.parse(Add);
-    createPinsFile();
+    console.log(args);
+    console.log(flags);
+
     let pinName;
     if (args.pin) {
       pinName = args.pin;
@@ -47,15 +42,12 @@ export default class Add extends Command {
     if (!pinName) {
       return;
     }
-    addPin({ name });
+    try {
+      await addPin({ name: pinName, force: flags.force });
+      console.log(chalk.green('New pin added'));
+      console.log(`${pinName} ${chalk.red('=>')} ${process.cwd()}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
-}
-
-async function askForPinName() {
-  const { name }: { name: string } = await prompt({
-    type: 'input',
-    name: 'name',
-    message: 'Give this pin a memorable name',
-  });
-  return name;
 }
