@@ -197,22 +197,23 @@ export function readJson<T>(fileName: string): T {
 }
 
 export function getPinList(): Pin[] {
-  let pinsFileContent = readFile(PINS_ALIASES);
-  console.log(pinsFileContent);
-  const pinsList = pinsFileContent
-    .replace(/\alias /g, '')
-    .replace(/"/g, '')
-    .split('\n')
-    .filter(line => line)
-    .map(line => {
-      const lineSplitted = line.split('=');
-      return {
-        name: lineSplitted[0],
-        path: lineSplitted[1],
-      };
-    });
-  console.log(pinsList);
-  return pinsList;
+  let pinsFileContent = readJson<PinFile>(PINS_FILE);
+
+  // console.log(pinsFileContent);
+  // const pinsList = pinsFileContent
+  //   .replace(/\alias /g, '')
+  //   .replace(/"/g, '')
+  //   .split('\n')
+  //   .filter(line => line)
+  //   .map(line => {
+  //     const lineSplitted = line.split('=');
+  //     return {
+  //       name: lineSplitted[0],
+  //       path: lineSplitted[1],
+  //     };
+  //   });
+  // console.log(pinsList);
+  return pinsFileContent.pins;
 }
 
 export const checkIfFileExists = (path: string): boolean => fs.existsSync(path);

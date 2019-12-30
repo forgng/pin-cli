@@ -30,6 +30,7 @@ USAGE
 <!-- commands -->
 * [`pin add [PIN]`](#pin-add-pin)
 * [`pin clear [FILE]`](#pin-clear-file)
+* [`pin delete [FILE]`](#pin-delete-file)
 * [`pin help [COMMAND]`](#pin-help-command)
 * [`pin list [FILE]`](#pin-list-file)
 * [`pin search`](#pin-search)
@@ -69,6 +70,22 @@ OPTIONS
 
 _See code: [src/commands/clear.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clear.ts)_
 
+## `pin delete [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ pin delete [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/delete.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/delete.ts)_
+
 ## `pin help [COMMAND]`
 
 display help for pin
@@ -95,9 +112,7 @@ USAGE
   $ pin list [FILE]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
 _See code: [src/commands/list.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/list.ts)_
