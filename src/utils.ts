@@ -190,6 +190,17 @@ export function getPinsThatUsesCurrentPath(): Pin[] {
   return pinsFileContent.pins.filter(pin => pin.path === currentPath);
 }
 
+// export function askConfirm(string: question): boolean {
+//   try {
+//     const { confirm } = await prompt({
+//       type: 'confirm',
+//       name: 'confirm',
+//       message: 'Overwrite?',
+//     });
+//   } catch(error) {
+
+//   }
+// }
 export const checkIfPathExists = (path: string): boolean => fs.existsSync(path);
 export const copyFile = (from: string, to: string) => fs.copyFileSync(from, to);
 

@@ -40,22 +40,30 @@ export default class Add extends Command {
   ];
 
   async run() {
-    createPinsFileIfNotExists();
-    const { args, flags }: InputArgs = this.parse(Add);
-    let pinName: string;
-    if (args.pin) {
-      pinName = args.pin;
-    } else {
-      pinName = await askForPinName();
-    }
-    if (!pinName) {
-      return;
-    }
-
-    if (flags.force) {
-      addPin({ name: pinName, path: process.cwd() });
-    } else {
-      if (getPinByName(pinName)) {
+    try {
+      createPinsFileIfNotExists();
+      const { args, flags }: InputArgs = this.parse(Add);
+      let pinName: string;
+      if (args.pin) {
+        pinName = args.pin;
+      } else {
+        pinName = await askForPinName();
+      }
+      if (!pinName) {
+        this.exit();
+      }
+      if (flags.force) {
+        addPin({ name: pinName, path: process.cwd() });
+        this.log(chalk.green('New pin added!'));
+        this.exit();
+      }
+      if (!getPinByName(pinName)) {
+        addPin({ name: pinName, path: process.cwd() });
+        this.log(chalk.green('New pin added!'));
+        this.exit();
+      }
+      let newName = pinName;
+      while (getPinByName(newName)) {
         this.log(chalk.yellow('A pin with this name already exists'));
         const { overwrite } = await prompt({
           type: 'confirm',
@@ -64,26 +72,17 @@ export default class Add extends Command {
         });
         if (overwrite === true) {
           addPin({ name: pinName, path: process.cwd() });
-        } else {
-          let newName = pinName;
-          while (getPinByName(newName)) {
-            // try {
-            newName = await askForPinName('Choose another name');
-            // } catch (error) {
-            // this.exit();
-            // }
-          }
-
-          if (!newName) {
-            this.exit();
-          }
+          this.log(chalk.green('Pin overridden!'));
           this.exit();
+        } else {
+          newName = await askForPinName('Choose another name');
         }
-      } else {
-        addPin({ name: pinName, path: process.cwd() });
       }
+      if (!newName) {
+        this.exit();
+      }
+    } catch (error) {
+      this.exit();
     }
-    this.log(chalk.green('New pin added'));
-    this.log(`${pinName} ${chalk.red('=>')} ${process.cwd()}`);
   }
 }
