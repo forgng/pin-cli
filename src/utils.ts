@@ -75,10 +75,10 @@ export function createPinsFile() {
   }
 }
 
-export function pinAlreadyExists(pin: string): boolean {
-  const pinsContent = readFile(PINS_ALIASES);
-  return pinsContent.includes(`alias ${pin}="`);
-}
+// export function pinAlreadyExists(pin: string): boolean {
+//   const pinsContent = readFile(PINS_ALIASES);
+//   return pinsContent.includes(`alias ${pin}="`);
+// }
 
 export function clear() {
   try {
@@ -137,14 +137,39 @@ export function updatePinList(newPinList: Pin[]) {
   writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
   writeToFile(PINS_ALIASES, pinsAliases);
 }
-export function isCurrentPathUsedByAPin(): boolean {
+
+export function addPin(pin: Pin) {
+  let pinsFile = readJson<PinFile>(PINS_FILE);
+  // const newPinsFile: PinFile = {
+  //   ...pinsFile,
+  //   updatedAt: now(),
+  //   pins: newPinList,
+  // };
+}
+
+export function removePins(pins: Pin[]) {
+  console.log('pins', pins);
+  const pinNames = pins.map(pin => pin.name);
+  console.log(pinNames);
+  let pinsFile = readJson<PinFile>(PINS_FILE);
+  const newPins = pinsFile.pins.filter(pin => !pinNames.includes(pin.name));
+  console.log(newPins);
+  const newPinsFile: PinFile = {
+    ...pinsFile,
+    updatedAt: now(),
+    pins: newPins,
+  };
+  const pinsAliases = newPins
+    .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
+    .join('');
+  writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
+  writeToFile(PINS_ALIASES, pinsAliases);
+}
+
+export function getPinByPath(path: string): Pin[] {
   let pinsFileContent = readJson<PinFile>(PINS_FILE);
   const pins = pinsFileContent.pins;
-  const currentPath = process.cwd();
-  if (pins.find(pin => pin.path === currentPath)) {
-    return true;
-  }
-  return false;
+  return pins.filter(pin => pin.path === path);
 }
 
 export function getPinsThatUsesCurrentPath(): Pin[] {

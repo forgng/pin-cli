@@ -13,6 +13,11 @@ export default class List extends Command {
 
   async run() {
     const pinsFile = getPinList();
+    if (!pinsFile.length) {
+      this.log(
+        chalk.yellow("You don't have any pin. Create a pin with pin add"),
+      );
+    }
     pinsFile
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(pin => {
