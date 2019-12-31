@@ -8,9 +8,7 @@ export default class Clean extends Command {
 
   async run() {
     const pinList = getPinList();
-    console.log(pinList);
     const invalidPins = pinList.filter(pin => !checkIfPathExists(pin.path));
-    console.log('invalidPins', invalidPins);
     if (!invalidPins.length) {
       this.log('There are no invalid pins');
       this.exit();
@@ -26,7 +24,6 @@ export default class Clean extends Command {
       message: 'Do you want do delete them?',
     });
     if (remove) {
-      console.log('remove');
       const newPins = pinList.filter(pin => checkIfPathExists(pin.path));
       updatePinList(newPins);
     }

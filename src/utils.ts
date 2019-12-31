@@ -134,7 +134,7 @@ export function updatePinList(newPinList: Pin[]) {
   const pinsAliases = newPinList
     .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
     .join('');
-  writeToFile(PINS_FILE, JSON.stringify(pinsFile));
+  writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
   writeToFile(PINS_ALIASES, pinsAliases);
 }
 export function isCurrentPathUsedByAPin(): boolean {
