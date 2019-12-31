@@ -61,7 +61,7 @@ function createPinAliasesFile() {
   fs.writeFileSync(PINS_ALIASES);
 }
 
-export function createPinsFile() {
+export function createPinsFileIfNotExists() {
   if (checkIfPathExists(PINS_ALIASES) && checkIfPathExists(PINS_FILE)) {
     return;
   }
@@ -140,11 +140,17 @@ export function updatePinList(newPinList: Pin[]) {
 
 export function addPin(pin: Pin) {
   let pinsFile = readJson<PinFile>(PINS_FILE);
-  // const newPinsFile: PinFile = {
-  //   ...pinsFile,
-  //   updatedAt: now(),
-  //   pins: newPinList,
-  // };
+  let newPins = [...pinsFile.pins.filter(p => p.name !== pin.name), pin];
+  const newPinsFile: PinFile = {
+    ...pinsFile,
+    updatedAt: now(),
+    pins: newPins,
+  };
+  const pinsAliases = newPins
+    .map(pin => `alias ${pin.name}="cd ${pin.path}"\n`)
+    .join('');
+  writeToFile(PINS_FILE, JSON.stringify(newPinsFile));
+  writeToFile(PINS_ALIASES, pinsAliases);
 }
 
 export function removePins(pins: Pin[]) {
@@ -170,6 +176,12 @@ export function getPinByPath(path: string): Pin[] {
   let pinsFileContent = readJson<PinFile>(PINS_FILE);
   const pins = pinsFileContent.pins;
   return pins.filter(pin => pin.path === path);
+}
+
+export function getPinByName(name: string): Pin | undefined {
+  let pinsFileContent = readJson<PinFile>(PINS_FILE);
+  const pins = pinsFileContent.pins;
+  return pins.find(pin => pin.name === name);
 }
 
 export function getPinsThatUsesCurrentPath(): Pin[] {
