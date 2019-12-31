@@ -13,9 +13,8 @@ export default class Search extends Command {
     const pinList = getPinList();
     console.log('pinList', pinList);
     if (!pinList.length) {
-      console.log(
-        `No pin yet, add your first pin with ${chalk.blue('pin add')}`,
-      );
+      this.log(`No pin yet, add your first pin with ${chalk.blue('pin add')}`);
+      this.exit();
     }
     await prompt({
       type: 'autocomplete',

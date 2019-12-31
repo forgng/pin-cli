@@ -46,12 +46,17 @@ export default class Add extends Command {
       let pinName: string;
       if (args.pin) {
         pinName = args.pin;
+        while (pinName === 'pin') {
+          this.log('Invalid name, choose another name');
+          pinName = await askForPinName('Choose another name');
+        }
       } else {
         pinName = await askForPinName();
       }
       if (!pinName) {
         this.exit();
       }
+
       if (flags.force) {
         addPin({ name: pinName, path: process.cwd() });
         this.log(chalk.green('New pin added!'));
@@ -75,7 +80,10 @@ export default class Add extends Command {
           this.log(chalk.green('Pin overridden!'));
           this.exit();
         } else {
-          newName = await askForPinName('Choose another name');
+          while (pinName === 'pin') {
+            this.log('Using pin');
+            newName = await askForPinName('Choose another name');
+          }
         }
       }
       if (!newName) {
