@@ -1,26 +1,21 @@
 import { Command, flags } from '@oclif/command';
-const chalk = require('chalk');
 import { prompt } from 'enquirer';
-
-import {
-  getPinByPath,
-  getPinsThatUsesCurrentPath,
-  askForPinName,
-  removePins,
-  getPinByName,
-} from '../utils';
+import { getPinByName, getPinByPath, removePins } from '../utils';
+const chalk = require('chalk');
 
 export default class Delete extends Command {
-  static description = 'describe the command here';
+  static description =
+    'Delete a specific pin or the pin associated with the current path';
+
+  static examples = [`$ pin delete [NAME]`];
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: 'f' }),
+    force: flags.boolean({ char: 'f', description: 'force the delete' }),
   };
 
   static args = [
-    { name: 'pin', required: false, description: 'pin to delete' },
+    { name: 'pin', required: false, description: 'Name of the pin to delete' },
   ];
 
   async run() {

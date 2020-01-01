@@ -3,23 +3,12 @@ import { Command, flags } from '@oclif/command';
 import { addPin, askForPinName, getPinByName } from '../utils';
 const { prompt } = require('enquirer');
 
-interface InputArgs {
-  args: {
-    pin: string;
-  };
-  flags: {
-    force: boolean;
-  };
-}
-
 export default class Add extends Command {
   static description = 'Add a new pin';
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
     name: flags.string({ char: 'n', description: 'name to print' }),
-    // flag with no value (-f, --force)
     force: flags.boolean({ char: 'f' }),
   };
 
@@ -29,10 +18,10 @@ export default class Add extends Command {
 
   async run() {
     try {
-      const { args, flags }: InputArgs = this.parse(Add);
+      const { args, flags } = this.parse(Add);
       let pinName: string;
-      if (args.pin) {
-        pinName = args.pin;
+      if (args.pin || flags.name) {
+        pinName = args.pin || flags.name;
         while (pinName === 'pin') {
           this.log('Invalid name, choose another name');
           pinName = await askForPinName('Choose another name');

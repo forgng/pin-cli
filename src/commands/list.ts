@@ -10,8 +10,6 @@ export default class List extends Command {
     help: flags.help({ char: 'h' }),
   };
 
-  static args = [{ name: 'file' }];
-
   async run() {
     const pinsFile = getPinList();
     if (!pinsFile.length) {

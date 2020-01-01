@@ -9,19 +9,23 @@ export default class Search extends Command {
   static examples = [`$ pin search`];
 
   async run() {
-    const { args, flags } = this.parse(Search);
-    const pinList = getPinList();
-
-    if (!pinList.length) {
-      this.log(`No pin yet, add your first pin with ${chalk.blue('pin add')}`);
+    try {
+      const pinList = getPinList();
+      if (!pinList.length) {
+        this.log(
+          `No pin yet, add your first pin with ${chalk.blue('pin add')}`,
+        );
+        this.exit();
+      }
+      await prompt({
+        type: 'autocomplete',
+        name: 'pin',
+        message: 'Search a pin',
+        limit: 30,
+        choices: pinList.map(pin => `${chalk.yellow(pin.name)} => ${pin.path}`),
+      });
+    } catch (error) {
       this.exit();
     }
-    await prompt({
-      type: 'autocomplete',
-      name: 'flavor',
-      message: 'Search a pin',
-      limit: 10,
-      choices: pinList.map(pin => `${pin.name} => ${chalk.red(pin.path)}`),
-    });
   }
 }

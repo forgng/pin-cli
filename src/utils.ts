@@ -9,12 +9,6 @@ export const PINS_ALIASES = path.join(os.homedir(), '.pins');
 export const BASH_FILE = path.join(os.homedir(), '.bashrc');
 export const BASH_FILE_BACKUP = path.join(os.homedir(), '.bashrc.saved_by_pin');
 
-// const tmpDir = '/tmp/';
-// export const BASH_FILE_TMP = `${tmpDir}.bashrc.tmp`;
-// export const PINS_ALIASES_TMP = `${tmpDir}.pins.tmp`;
-// export const PINS_FILE_TMP = `${tmpDir}.pins.json.tmp`;
-// export const BASH_FILE_BACKUP_TMP = `${tmpDir}.bashrc.saved_by_pin.tpm`;
-
 export async function askForPinName(message?: string): Promise<string> {
   const { name }: { name: string } = await prompt({
     type: 'input',
