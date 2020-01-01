@@ -69,22 +69,16 @@ export function createPinsFileIfNotExists() {
 }
 
 export function nuke() {
-  try {
-    if (checkIfPathExists(PINS_ALIASES)) {
-      fs.unlinkSync(PINS_ALIASES);
-    }
-    if (checkIfPathExists(PINS_ALIASES)) {
-      fs.unlinkSync(PINS_ALIASES);
-    }
-    let bashContent = readFile(BASH_FILE);
-    bashContent = bashContent.replace(/(#pins.*)/g, '');
-    bashContent = bashContent.replace(/\. \~\/\.pins/g, '');
-
-    fs.writeFileSync(BASH_FILE, bashContent);
-  } catch (err) {
-    console.log(err);
-    throw new Error('Somethig went wrong');
+  if (checkIfPathExists(PINS_ALIASES)) {
+    fs.unlinkSync(PINS_ALIASES);
   }
+  if (checkIfPathExists(PINS_FILE)) {
+    fs.unlinkSync(PINS_FILE);
+  }
+  let bashContent = readFile(BASH_FILE);
+  bashContent = bashContent.replace(/(#pins.*)/g, '');
+  bashContent = bashContent.replace(/\. \~\/\.pins/g, '');
+  fs.writeFileSync(BASH_FILE, bashContent);
 }
 
 export function readFile(fileName: string): string {

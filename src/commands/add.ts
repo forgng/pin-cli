@@ -1,18 +1,6 @@
 const chalk = require('chalk');
 import { Command, flags } from '@oclif/command';
-import {
-  askForPinName,
-  createPinsFileIfNotExists,
-  readJson,
-  PINS_FILE,
-  writeToFile,
-  PINS_ALIASES,
-  now,
-  updatePinList,
-  addPin,
-  getPinByName,
-} from '../utils';
-import { PinFile, Pin } from '../types';
+import { addPin, askForPinName, getPinByName } from '../utils';
 const { prompt } = require('enquirer');
 
 interface InputArgs {
@@ -41,7 +29,6 @@ export default class Add extends Command {
 
   async run() {
     try {
-      createPinsFileIfNotExists();
       const { args, flags }: InputArgs = this.parse(Add);
       let pinName: string;
       if (args.pin) {

@@ -53,7 +53,10 @@
     "bin": "pin",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "init": "./lib/hooks/init/init"
+    }
   },
   "repository": "forgng/pin",
   "scripts": {

@@ -17,16 +17,18 @@ export default class Nuke extends Command {
     const { flags } = this.parse(Nuke);
 
     if (flags.force) {
-      clear();
+      nuke();
+      this.log('All pins have been deleted');
       this.exit();
     }
-    const { nuke } = await prompt({
+    const { confirm } = await prompt({
       type: 'confirm',
-      name: 'nuke',
+      name: 'confirm',
       message: `This will delete all the pins and cannot be undone, are you sure?`,
     });
-    if (nuke) {
+    if (confirm) {
       nuke();
+      this.log('All pins have been deleted');
     }
     this.exit();
   }
