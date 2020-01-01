@@ -1,7 +1,7 @@
 {
   "name": "pin",
   "description": "Pin folder and files",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "@forgng",
   "bin": {
     "pin": "./bin/run"
@@ -12,7 +12,6 @@
     "@oclif/config": "1.13.3",
     "@oclif/plugin-help": "2.2.3",
     "chalk": "3.0.0",
-    "cli-table": "0.3.1",
     "enquirer": "2.3.2",
     "execa": "4.0.0",
     "tslib": "1.10.0",

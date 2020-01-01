@@ -3,7 +3,8 @@ import { Command, flags } from '@oclif/command';
 import { getPinList } from '../utils';
 
 export default class List extends Command {
-  static description = 'describe the command here';
+  static description = 'List all the pins';
+  static examples = [`$ pin list`];
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -15,7 +16,9 @@ export default class List extends Command {
     const pinsFile = getPinList();
     if (!pinsFile.length) {
       this.log(
-        chalk.yellow("You don't have any pin. Create a pin with pin add"),
+        `${chalk.yellow(
+          "You don't have any pin. Create a new pin with",
+        )} "${chalk.red('pin add')}"`,
       );
     }
     pinsFile

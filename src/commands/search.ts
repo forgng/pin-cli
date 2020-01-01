@@ -4,7 +4,7 @@ const { prompt } = require('enquirer');
 const chalk = require('chalk');
 
 export default class Search extends Command {
-  static description = 'describe the command here';
+  static description = 'Search for a pin';
 
   static examples = [`$ pin search`];
 

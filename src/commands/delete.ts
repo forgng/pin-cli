@@ -17,7 +17,6 @@ export default class Delete extends Command {
     help: flags.help({ char: 'h' }),
     // flag with no value (-f, --force)
     force: flags.boolean({ char: 'f' }),
-    yes: flags.boolean({ char: 'y' }),
   };
 
   static args = [
@@ -43,7 +42,7 @@ export default class Delete extends Command {
       this.exit();
     }
 
-    if (flags.yes || flags.force) {
+    if (flags.force) {
       removePins(pinUsedByCurrentPath);
       this.log(`Pins Removed`);
       this.exit();
