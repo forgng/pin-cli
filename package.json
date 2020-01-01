@@ -1,6 +1,6 @@
 {
   "name": "pin",
-  "description": "Pin folder and files",
+  "description": "Pin your most used folders. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.",
   "version": "1.0.0",
   "author": "@forgng",
   "bin": {

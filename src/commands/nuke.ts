@@ -11,8 +11,6 @@ export default class Nuke extends Command {
     force: flags.boolean({ char: 'f' }),
   };
 
-  static args = [{ name: 'file' }];
-
   async run() {
     const { flags } = this.parse(Nuke);
 

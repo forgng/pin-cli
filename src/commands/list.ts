@@ -3,7 +3,7 @@ import { Command, flags } from '@oclif/command';
 import { getPinList } from '../utils';
 
 export default class List extends Command {
-  static description = 'List all the pins';
+  static description = 'List all pins';
   static examples = [`$ pin list`];
 
   static flags = {

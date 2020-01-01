@@ -4,7 +4,7 @@ import { addPin, askForPinName, getPinByName } from '../utils';
 const { prompt } = require('enquirer');
 
 export default class Add extends Command {
-  static description = 'Add a new pin';
+  static description = 'Add new pin';
 
   static flags = {
     help: flags.help({ char: 'h' }),

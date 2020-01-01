@@ -1,19 +1,12 @@
-pin
-===
+# pin
 
-manage aliases like a pro
+Pin your most used folders. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/pin.svg)](https://npmjs.org/package/pin)
-[![Downloads/week](https://img.shields.io/npm/dw/pin.svg)](https://npmjs.org/package/pin)
-[![License](https://img.shields.io/npm/l/pin.svg)](https://github.com/forgng/pin/blob/master/package.json)
+- [Usage](#usage)
+- [Commands](#commands)
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
+## Usage
+
 ```sh-session
 $ npm install -g pin
 $ pin COMMAND
@@ -25,19 +18,22 @@ USAGE
   $ pin COMMAND
 ...
 ```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`pin add [PIN]`](#pin-add-pin)
-* [`pin clean [FILE]`](#pin-clean-file)
-* [`pin clear [FILE]`](#pin-clear-file)
-* [`pin delete`](#pin-delete)
-* [`pin help [COMMAND]`](#pin-help-command)
-* [`pin list [FILE]`](#pin-list-file)
-* [`pin nuke [FILE]`](#pin-nuke-file)
-* [`pin search`](#pin-search)
 
-## `pin add [PIN]`
+## Commands
+
+- [pin](#pin)
+  - [Usage](#usage)
+  - [Commands](#commands)
+    - [pin add [PIN]](#pin-add-pin)
+    - [pin clean [FILE]](#pin-clean-file)
+  - [pin clear [FILE]](#pin-clear-file)
+  - [pin delete](#pin-delete)
+  - [pin help [COMMAND]](#pin-help-command)
+  - [pin list [FILE]](#pin-list-file)
+  - [pin nuke [FILE]](#pin-nuke-file)
+  - [pin search](#pin-search)
+
+### `pin add [PIN]`
 
 Add a new pin
 
@@ -54,11 +50,9 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/add.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/add.ts)_
+### `pin clean [FILE]`
 
-## `pin clean [FILE]`
-
-describe the command here
+Remove all invalid pins
 
 ```
 USAGE
@@ -101,8 +95,6 @@ OPTIONS
   -h, --help   show CLI help
 ```
 
-_See code: [src/commands/delete.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/delete.ts)_
-
 ## `pin help [COMMAND]`
 
 display help for pin
@@ -118,8 +110,6 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
-
 ## `pin list [FILE]`
 
 describe the command here
@@ -131,8 +121,6 @@ USAGE
 OPTIONS
   -h, --help  show CLI help
 ```
-
-_See code: [src/commands/list.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/list.ts)_
 
 ## `pin nuke [FILE]`
 
@@ -148,8 +136,6 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/nuke.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/nuke.ts)_
-
 ## `pin search`
 
 describe the command here
@@ -161,6 +147,3 @@ USAGE
 EXAMPLE
   $ pin search
 ```
-
-_See code: [src/commands/search.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/search.ts)_
-<!-- commandsstop -->
