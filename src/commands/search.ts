@@ -11,7 +11,7 @@ export default class Search extends Command {
   async run() {
     const { args, flags } = this.parse(Search);
     const pinList = getPinList();
-    console.log('pinList', pinList);
+
     if (!pinList.length) {
       this.log(`No pin yet, add your first pin with ${chalk.blue('pin add')}`);
       this.exit();

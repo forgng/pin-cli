@@ -21,7 +21,7 @@ export default class List extends Command {
     pinsFile
       .sort((a, b) => a.name.localeCompare(b.name))
       .forEach(pin => {
-        this.log(`${chalk.blue(pin.name)} => ${chalk.red(pin.path)}`);
+        this.log(`${chalk.blue(pin.name)} => ${pin.path}`);
       });
   }
 }

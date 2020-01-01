@@ -1,26 +1,19 @@
 const fs = require('fs');
-const chalk = require('chalk');
 import { prompt } from 'enquirer';
-const execa = require('execa');
-
-import * as path from 'path';
 import * as os from 'os';
-import { PinFile, Pin } from './commands/types';
-// # Setting PATH for Python 3.7
-// # The original version is saved in .bash_profile.pysave
-// PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
-// eval "$(rbenv init -)"
+import * as path from 'path';
+import { Pin, PinFile } from './types';
 
 export const PINS_FILE = path.join(os.homedir(), '.pins.json');
 export const PINS_ALIASES = path.join(os.homedir(), '.pins');
 export const BASH_FILE = path.join(os.homedir(), '.bashrc');
 export const BASH_FILE_BACKUP = path.join(os.homedir(), '.bashrc.saved_by_pin');
 
-const tmpDir = '/tmp/';
-export const BASH_FILE_TMP = `${tmpDir}.bashrc.tmp`;
-export const PINS_ALIASES_TMP = `${tmpDir}.pins.tmp`;
-export const PINS_FILE_TMP = `${tmpDir}.pins.json.tmp`;
-export const BASH_FILE_BACKUP_TMP = `${tmpDir}.bashrc.saved_by_pin.tpm`;
+// const tmpDir = '/tmp/';
+// export const BASH_FILE_TMP = `${tmpDir}.bashrc.tmp`;
+// export const PINS_ALIASES_TMP = `${tmpDir}.pins.tmp`;
+// export const PINS_FILE_TMP = `${tmpDir}.pins.json.tmp`;
+// export const BASH_FILE_BACKUP_TMP = `${tmpDir}.bashrc.saved_by_pin.tpm`;
 
 export async function askForPinName(message?: string): Promise<string> {
   const { name }: { name: string } = await prompt({
@@ -75,35 +68,19 @@ export function createPinsFileIfNotExists() {
   }
 }
 
-// export function pinAlreadyExists(pin: string): boolean {
-//   const pinsContent = readFile(PINS_ALIASES);
-//   return pinsContent.includes(`alias ${pin}="`);
-// }
-
-export function clear() {
+export function nuke() {
   try {
     if (checkIfPathExists(PINS_ALIASES)) {
       fs.unlinkSync(PINS_ALIASES);
     }
-    if (checkIfPathExists(BASH_FILE_BACKUP)) {
-      fs.unlinkSync(BASH_FILE_BACKUP);
+    if (checkIfPathExists(PINS_ALIASES)) {
+      fs.unlinkSync(PINS_ALIASES);
     }
-    copyFile(BASH_FILE, BASH_FILE_TMP);
     let bashContent = readFile(BASH_FILE);
     bashContent = bashContent.replace(/(#pins.*)/g, '');
     bashContent = bashContent.replace(/\. \~\/\.pins/g, '');
-    console.log('bashContent', bashContent);
-    fs.writeFileSync(BASH_FILE, bashContent);
 
-    if (checkIfPathExists(PINS_FILE_TMP)) {
-      fs.unlinkSync(PINS_FILE_TMP);
-    }
-    if (checkIfPathExists(BASH_FILE_BACKUP_TMP)) {
-      fs.unlinkSync(BASH_FILE_BACKUP_TMP);
-    }
-    if (checkIfPathExists(BASH_FILE_TMP)) {
-      fs.unlinkSync(BASH_FILE_TMP);
-    }
+    fs.writeFileSync(BASH_FILE, bashContent);
   } catch (err) {
     console.log(err);
     throw new Error('Somethig went wrong');
@@ -154,12 +131,9 @@ export function addPin(pin: Pin) {
 }
 
 export function removePins(pins: Pin[]) {
-  console.log('pins', pins);
   const pinNames = pins.map(pin => pin.name);
-  console.log(pinNames);
   let pinsFile = readJson<PinFile>(PINS_FILE);
   const newPins = pinsFile.pins.filter(pin => !pinNames.includes(pin.name));
-  console.log(newPins);
   const newPinsFile: PinFile = {
     ...pinsFile,
     updatedAt: now(),
@@ -190,30 +164,5 @@ export function getPinsThatUsesCurrentPath(): Pin[] {
   return pinsFileContent.pins.filter(pin => pin.path === currentPath);
 }
 
-// export function askConfirm(string: question): boolean {
-//   try {
-//     const { confirm } = await prompt({
-//       type: 'confirm',
-//       name: 'confirm',
-//       message: 'Overwrite?',
-//     });
-//   } catch(error) {
-
-//   }
-// }
 export const checkIfPathExists = (path: string): boolean => fs.existsSync(path);
 export const copyFile = (from: string, to: string) => fs.copyFileSync(from, to);
-
-// export LC_ALL=en_US.UTF-8
-// export LANG=en_US.UTF-8
-// . ~/.aliases
-// export NVM_DIR="/Users/gianlucachiap/.nvm"
-// [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-// export PATH="$HOME/.yarn/bin:$PATH"
-
-// export ANDROID_HOME=$HOME/Library/Android/sdk
-// export PATH=$PATH:$ANDROID_HOME/emulator
-// export PATH=$PATH:$ANDROID_HOME/tools
-// export PATH=$PATH:$ANDROID_HOME/tools/bin
-// export PATH=$PATH:$ANDROID_HOME/platform-tools

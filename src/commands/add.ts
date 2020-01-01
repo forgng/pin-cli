@@ -12,7 +12,7 @@ import {
   addPin,
   getPinByName,
 } from '../utils';
-import { PinFile, Pin } from './types';
+import { PinFile, Pin } from '../types';
 const { prompt } = require('enquirer');
 
 interface InputArgs {

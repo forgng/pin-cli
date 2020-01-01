@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { clear } from '../utils';
+import { nuke } from '../utils';
 import { prompt } from 'enquirer';
 
 export default class Nuke extends Command {
@@ -26,7 +26,7 @@ export default class Nuke extends Command {
       message: `This will delete all the pins and cannot be undone, are you sure?`,
     });
     if (nuke) {
-      clear();
+      nuke();
     }
     this.exit();
   }
