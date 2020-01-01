@@ -11,17 +11,18 @@ export default class Delete extends Command {
 
   static flags = {
     help: flags.help({ char: 'h' }),
+    name: flags.string({ char: 'n', description: 'name of the pin to delete' }),
     force: flags.boolean({ char: 'f', description: 'force the delete' }),
   };
 
   static args = [
-    { name: 'pin', required: false, description: 'Name of the pin to delete' },
+    { name: 'pin', required: false, description: 'name of the pin to delete' },
   ];
 
   async run() {
     const { args, flags } = this.parse(Delete);
 
-    if (args.pin) {
+    if (args.pin || flags.name) {
       const correspondingPin = getPinByName(args.pin);
       if (!correspondingPin) {
         this.log(chalk.red(`There is no pin named ${args.pin}`));
