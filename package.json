@@ -74,7 +74,7 @@
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest",
     "readme": "oclif-dev readme",
     "manifest": "oclif-dev manifest",
-    "publish": "np"
+    "publish:np": "np"
   },
   "types": "lib/index.d.ts"
 }
