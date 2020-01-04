@@ -11,10 +11,10 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
-    "tslib": "^1",
     "chalk": "3.0.0",
     "enquirer": "2.3.2",
     "execa": "4.0.0",
+    "tslib": "^1",
     "update-notifier": "4.0.0"
   },
   "devDependencies": {
@@ -29,6 +29,7 @@
     "eslint-config-oclif-typescript": "^0.1",
     "globby": "^10",
     "mocha": "^5",
+    "np": "5.2.1",
     "nyc": "^14",
     "ts-node": "^8",
     "typescript": "^3.3"
@@ -49,6 +50,9 @@
   ],
   "license": "MIT",
   "main": "lib/index.js",
+  "np": {
+    "test": false
+  },
   "oclif": {
     "commands": "./lib/commands",
     "bin": "pin",
@@ -64,12 +68,13 @@
   },
   "repository": "forgng/pin",
   "scripts": {
+    "test": "echo LOL",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest",
-    "test": "echo LOL",
     "readme": "oclif-dev readme",
-    "manifest": "oclif-dev manifest"
+    "manifest": "oclif-dev manifest",
+    "publish": "np"
   },
   "types": "lib/index.d.ts"
 }
