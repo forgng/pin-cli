@@ -1,94 +1,79 @@
 # pin
 
-Pin your most used folders. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.
+Pin your most used locations. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.
 
-- [Usage](#usage)
+- [How does it works](#how-does-it-works)
+- [Install](#install)
+- [Usage](#basic-usage)
 - [Commands](#commands)
 
-## Usage
+## How does it works
+
+A pin is just an alias to a specific folder. All the new pins are added to a separate file (**.pins**). This files is then linked to the **.bashrc**
+
+## Install
 
 ```sh-session
 $ npm install -g pin
-$ pin COMMAND
-running command...
-$ pin (-v|--version|version)
-pin/0.0.1 darwin-x64 node-v10.16.0
-$ pin --help [COMMAND]
-USAGE
-  $ pin COMMAND
-...
+```
+
+## Basic usage
+
+Go to a directory you want to save
+
+```sh-session
+  $ cd /path-to-dir
+  $ pin add <pin-name>
+  $ <pin-name>
 ```
 
 ## Commands
 
-- [pin](#pin)
-  - [Usage](#usage)
-  - [Commands](#commands)
-    - [pin add [PIN]](#pin-add-pin)
-    - [pin clean [FILE]](#pin-clean-file)
-  - [pin clear [FILE]](#pin-clear-file)
-  - [pin delete](#pin-delete)
-  - [pin help [COMMAND]](#pin-help-command)
-  - [pin list [FILE]](#pin-list-file)
-  - [pin nuke [FILE]](#pin-nuke-file)
-  - [pin search](#pin-search)
+- [pin add [PIN-NAME]](#pin-add-pin-name)
+- [pin clean](#pin-clean)
+- [pin delete](#pin-delete-pin-name)
+- [pin help [COMMAND]](#pin-help-command)
+- [pin list](#pin-list)
+- [pin nuke](#pin-nuke)
+- [pin search](#pin-search)
 
-### `pin add [PIN]`
+### `pin add [PIN-NAME]`
 
-Add a new pin
+Pin the current location.
 
 ```
 USAGE
-  $ pin add [PIN]
+  $ pin add [PIN-NAME]
 
 ARGUMENTS
-  PIN  Name for the pin
+  PIN-NAME  pin name
 
 OPTIONS
   -f, --force
   -h, --help       show CLI help
-  -n, --name=name  name to print
+  -n, --name=name  pin name
 ```
 
-### `pin clean [FILE]`
+### `pin clean`
 
-Remove all invalid pins
+Remove all the pins that point to non existing locations.
 
 ```
 USAGE
-  $ pin clean [FILE]
+  $ pin clean
 
 OPTIONS
   -f, --force
   -h, --help       show CLI help
-  -n, --name=name  name to print
 ```
 
-_See code: [src/commands/clean.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clean.ts)_
+## `pin delete [PIN-NAME]`
 
-## `pin clear [FILE]`
-
-describe the command here
+Delete a specific pin or the pin to the current folder
 
 ```
 USAGE
-  $ pin clear [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-```
-
-_See code: [src/commands/clear.ts](https://github.com/forgng/pin/blob/v0.0.1/src/commands/clear.ts)_
-
-## `pin delete`
-
-describe the command here
-
-```
-USAGE
-  $ pin delete
+  $ pin delete [PIN-NAME]
 
 OPTIONS
   -f, --force
@@ -110,25 +95,25 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-## `pin list [FILE]`
+## `pin list`
 
-describe the command here
+List all the pins
 
 ```
 USAGE
-  $ pin list [FILE]
+  $ pin list
 
 OPTIONS
   -h, --help  show CLI help
 ```
 
-## `pin nuke [FILE]`
+## `pin nuke`
 
-describe the command here
+Delete all the pins
 
 ```
 USAGE
-  $ pin nuke [FILE]
+  $ pin nuke
 
 OPTIONS
   -f, --force
@@ -138,12 +123,9 @@ OPTIONS
 
 ## `pin search`
 
-describe the command here
+Search for a pin
 
 ```
 USAGE
-  $ pin search
-
-EXAMPLE
   $ pin search
 ```

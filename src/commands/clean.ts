@@ -4,7 +4,8 @@ import { getPinList, checkIfPathExists, updatePinList } from '../utils';
 const chalk = require('chalk');
 
 export default class Clean extends Command {
-  static description = 'Remove all invalid pins';
+  static description =
+    'Remove all the pins that are linked to non existing locations';
 
   async run() {
     const pinList = getPinList();

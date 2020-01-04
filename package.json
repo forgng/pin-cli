@@ -1,5 +1,5 @@
 {
-  "name": "pin",
+  "name": "pin-cli",
   "description": "Pin your most used folders. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.",
   "version": "1.2.1",
   "author": "@forgng",
@@ -44,7 +44,8 @@
   ],
   "homepage": "https://github.com/forgng/pin",
   "keywords": [
-    "oclif"
+    "cli",
+    "pin"
   ],
   "license": "MIT",
   "main": "lib/index.js",
@@ -65,9 +66,10 @@
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif-dev readme && git add README.md"
+    "readme": "oclif-dev readme",
+    "manifest": "oclif-dev manifest"
   },
   "types": "lib/index.d.ts"
 }
