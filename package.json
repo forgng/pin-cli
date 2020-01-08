@@ -1,7 +1,7 @@
 {
   "name": "pin-cli",
   "description": "Pin your most used folders. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "@forgng",
   "bin": {
     "pin": "./bin/run"
