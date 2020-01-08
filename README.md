@@ -14,7 +14,7 @@ A pin is just an alias to a specific folder. All the new pins are added to a sep
 ## Install
 
 ```sh-session
-$ npm install -g pin
+$ npm install -g pin-cli
 ```
 
 ## Basic usage
