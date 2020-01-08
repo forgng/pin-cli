@@ -1,4 +1,4 @@
-# pin
+# pin-cli
 
 Pin your most used locations. Quickly teleport to pinned locations. Guarantee to save up to 10 seconds.
 
