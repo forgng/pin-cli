@@ -9,7 +9,7 @@ Pin your most used locations. Quickly teleport to pinned locations. Guarantee to
 
 ## How does it works
 
-A pin is just an alias to a specific folder. All the new pins are added to a separate file (**.pins**). This files is then linked to the **.bashrc**
+A pin is just an alias to a specific folder. All the new pins are added to a separate file (**.pins**). This file is then linked to the **.bashrc**
 
 ## Install
 
